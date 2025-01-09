@@ -18,6 +18,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.post('/api/users', userRoutes);
 app.get('/api/get/users', userRoutes);
+app.get('/api/users/:id', userRoutes);
+
+app.get('/usergrid', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'userGrid.html'))
+});
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

@@ -1,4 +1,4 @@
-const {getUsers, addUser } = require('../models/userModel');
+const {getUsers, addUser, getUserById } = require('../models/userModel');
 
 const fetchUsers = async (req, res) =>{
     try {
@@ -9,6 +9,14 @@ const fetchUsers = async (req, res) =>{
     }
 };
 
+const fetchUserById = async (req, res) =>{
+    try {
+        const users = await getUserById(req.params.id);
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({message: 'Error fetching users', error});
+    }
+};
 
 const createUser = async (req, res) => {
     try {
@@ -21,4 +29,4 @@ const createUser = async (req, res) => {
     
 };
 
-module.exports = {createUser, fetchUsers};
+module.exports = {createUser, fetchUsers, fetchUserById};

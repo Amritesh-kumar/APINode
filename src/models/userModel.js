@@ -3,8 +3,16 @@ const sql = require('mssql');
 
 const getUsers = async () => {
     const pool = await db;
-    const result = await pool.request().query('SELECT * FROM USERS');
+    const result = await pool.request().query('SELECT id,name FROM USERS');
     return result.recordset;
+};
+
+const getUserById = async (id) => {
+    const pool = await db;
+    const result = await pool.request()
+    .input('id', sql.Int, id)
+    .query('SELECT * FROM USERS WHERE id = @id');
+    return result.recordset[0];
 };
 
 const addUser = async (id, name) => {
@@ -22,4 +30,4 @@ const addUser = async (id, name) => {
     }
 };
 
-module.exports = {getUsers, addUser };
+module.exports = {getUsers, addUser, getUserById };
